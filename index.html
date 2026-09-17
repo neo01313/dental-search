@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원장님 전용 치과 재료 포털</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f6f9; margin: 0; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 650px; width: 100%; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #2c3e50; font-size: 24px; margin-bottom: 20px; font-weight: bold; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 25px; }
+        input[type="text"] { flex: 1; padding: 14px 15px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; outline: none; transition: border-color 0.2s; }
+        input[type="text"]:focus { border-color: #3498db; }
+        button { padding: 14px 25px; background-color: #3498db; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #2980b9; }
+        
+        .mall-list { text-align: left; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; }
+        .mall-list p { margin: 0 0 12px 0; font-weight: bold; color: #7f8c8d; font-size: 14px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: #e1f5fe; color: #0288d1; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; border: 1px solid #b3e5fc; }
+        
+        .notice { margin-top: 15px; font-size: 12px; color: #e74c3c; font-weight: bold; text-align: left; background: #fdf2f2; padding: 10px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>➡️ 원장님 맞춤형 치과재료 멀티 검색기</h1>
+    
+    <div class="search-box">
+        <input type="text" id="keyword" placeholder="검색할 재료명을 입력하세요 (예: 레진, 알지네이트)" onkeypress="if(event.keyCode==13) searchAll();">
+        <button onclick="searchAll()">10개 몰 동시 검색</button>
+    </div>
+
+    <div class="mall-list">
+        <p>📊 연동된 치과 재료 쇼핑몰 (총 10곳)</p>
+        <div class="tags">
+            <span class="tag">오스템 직영몰</span>
+            <span class="tag">엠덴트 (메가젠)</span>
+            <span class="tag">오브마켓 (덴티스)</span>
+            <span class="tag">DVmall (샤인)</span>
+            <span class="tag">이덴트</span>
+            <span class="tag">덴탈빈 몰</span>
+            <span class="tag">덴탈365</span>
+            <span class="tag">올소마트 (교정)</span>
+            <span class="tag">미소몰닷컴</span>
+        </div>
+    </div>
+
+    <div class="notice">
+        ⚠️ [필수 확인] 브라우저 주소창 오른쪽에 '팝업 차단' 알림이 뜨면, 반드시 <b>[항상 허용]</b>으로 변경해 주셔야 10개 창이 정상적으로 열립니다.
+    </div>
+</div>
+
+<script>
+function searchAll() {
+    var query = document.getElementById('keyword').value.trim();
+    if (!query) {
+        alert('검색어를 입력해주세요.');
+        return;
+    }
+    
+    // 한글 깨짐 방지를 위한 인코딩 처리
+    var encodedQuery = encodeURIComponent(query);
+    // EUC-KR(이덴트 등 올드 시스템 대응용 인코딩) - 브라우저가 자동 판별하도록 우선 처리
+    var rawQuery = query; 
+
+    // 쇼핑몰별 검색 URL 주소 매칭 규칙 리스트
+    var urls = [
+        // 1. 오스템몰 (로그인 연동 및 통합검색 패턴)
+        "https://osstem.com" + encodedQuery,
+        
+        // 2. 엠덴트 (메가젠몰)
+        "https://m-dent.co.kr" + encodedQuery,
+        
+        // 3. 오브마켓 (덴티스몰)
+        "https://allof.co.kr" + encodedQuery,
+        
+        // 4. DVmall
+        "https://dvmall.co.kr" + encodedQuery,
+        
+        // 5. 이덴트 (EUC-KR 기반이지만 현대 브라우저에서 자동 파라미터 수신함)
+        "https://edent.co.kr" + encodedQuery,
+        
+        // 6. 덴탈빈 몰 (보안 검색 구조로, 메인 검색 대기 혹은 다이렉트 쿼리)
+        "https://dentalbean.com" + encodedQuery,
+        
+        // 7. 덴탈365
+        "https://dental365.co.kr" + encodedQuery,
+        
+        // 8. 올소마트 (교정 전문몰)
+        "https://orthomart.co.kr" + encodedQuery,
+        
+        // 9. 미소몰닷컴 (보안 폐쇄몰 - 메인 주소 띄운 후 원장님 로그인 상태에서 바로 검색 유도용)
+        "https://misomall.com" + encodedQuery
+    ];
+
+    // 10개 창 동시에 띄우기 루프
+    urls.forEach(function(url) {
+        window.open(url, '_blank');
+    });
+}
+</script>
+
+</body>
+</html>
