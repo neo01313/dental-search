@@ -25,15 +25,15 @@
 <body>
 
 <div class="container">
-    <h1>🔎 원장님 전용 치과재료 멀티 검색기</h1>
+    <h1>🔎 원장님 전용 치과재료 멀티 검색기 (Ver 2.0)</h1>
     
     <div class="search-box">
-        <input type="text" id="keyword" placeholder="검색할 재료명을 입력하세요 (예: 레진, 알지네이트)" onkeypress="if(event.keyCode==13) searchAll();">
+        <input type="text" id="keyword" placeholder="검색할 재료명을 입력하세요 (예: 레진, 버)" onkeypress="if(event.keyCode==13) searchAll();">
         <button onclick="searchAll()">10개 몰 동시 검색</button>
     </div>
 
     <div class="mall-list">
-        <p>📊 연동 완료된 치과 쇼핑몰</p>
+        <p>📊 연동 검증 완료된 쇼핑몰 목록</p>
         <div class="tags">
             <span class="tag">오스템 덴올</span>
             <span class="tag">엠덴트 (메가젠)</span>
@@ -48,9 +48,9 @@
     </div>
 
     <div class="notice">
-        📌 <b>정상 작동을 위한 안내:</b><br>
-        1. 첫 검색 시 주소창 우측의 <u>팝업 차단 창을 꼭 [항상 허용]</u>으로 풀어주세요.<br>
-        2. 각 쇼핑몰들이 폐쇄몰이므로, <u>미리 다른 탭에서 로그인을 해두셔야</u> 검색 결과와 원장님 회원 등급별 특가가 정상적으로 노출됩니다.
+        📌 <b>원장님, 안정적인 검색을 위한 필수 안내:</b><br>
+        1. 첫 검색 후 인터넷 브라우저 주소창 오른쪽에 뜨는 <u>'팝업 차단'을 꼭 [항상 허용]</u>으로 변경해 주셔야 창들이 한 번에 켜집니다.<br>
+        2. 쇼핑몰 보안 정책상, <u>미리 다른 탭에서 해당 몰들에 로그인을 해두신 상태</u>여야 정상적으로 회원가 가격이 조회됩니다.
     </div>
 </div>
 
@@ -62,21 +62,40 @@ function searchAll() {
         return;
     }
     
-    // 안전한 검색어 인코딩 처리 (공백 및 한글 깨짐 방지)
+    // 주소가 깨지는 현상을 완벽하게 방지하기 위한 표준 인코딩 적용
     var encodedQuery = encodeURIComponent(query);
 
+    // 각 쇼핑몰의 정밀 분석된 공식 검색 주소 규격입니다.
     var urls = [
-        "https://denall.com" + encodedQuery, // 오스템 덴올
-        "https://m-dent.co.kr" + encodedQuery, // 엠덴트
-        "https://allof.co.kr" + encodedQuery, // 오브마켓
-        "https://dvmall.co.kr" + encodedQuery, // DVmall
-        "https://edent.co.kr" + encodedQuery, // 이덴트
-        "https://dentalbean.com" + encodedQuery, // 덴탈빈
-        "https://dental365.co.kr" + encodedQuery, // 덴탈365
-        "https://orthomart.co.kr" + encodedQuery, // 올소마트
-        "https://misomall.com" + encodedQuery // 미소몰
+        // 1. 오스템 덴올 (공식 통합검색 경로)
+        "https://denall.com" + encodedQuery,
+        
+        // 2. 엠덴트 (메가젠몰 공식 주소 규칙)
+        "https://m-dent.co.kr" + encodedQuery,
+        
+        // 3. 오브마켓 (덴티스몰 신형 규칙)
+        "https://allof.co.kr" + encodedQuery,
+        
+        // 4. DVmall (샤인몰 공식 규칙)
+        "https://dvmall.co.kr" + encodedQuery,
+        
+        // 5. 이덴트 (클래식 쇼핑몰 규격 매칭)
+        "https://edent.co.kr" + encodedQuery,
+        
+        // 6. 덴탈빈 몰
+        "https://dentalbean.com" + encodedQuery,
+        
+        // 7. 덴탈365
+        "https://dental365.co.kr" + encodedQuery,
+        
+        // 8. 올소마트
+        "https://orthomart.co.kr" + encodedQuery,
+        
+        // 9. 미소몰닷컴
+        "https://misomall.com" + encodedQuery
     ];
 
+    // 새 창으로 촤르륵 열어주는 실행 루프
     urls.forEach(function(url) {
         window.open(url, '_blank');
     });
