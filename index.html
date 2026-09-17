@@ -9,7 +9,7 @@
         .container { max-width: 650px; width: 100%; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
         h1 { color: #2c3e50; font-size: 24px; margin-bottom: 20px; font-weight: bold; }
         .search-box { display: flex; gap: 10px; margin-bottom: 25px; }
-        input[type="text"] { flex: 1; padding: 14px 15px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; outline: none; transition: border-color 0.2s; }
+        input[type="text"] { flex: 1; padding: 14px 15px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; outline: none; }
         input[type="text"]:focus { border-color: #3498db; }
         button { padding: 14px 25px; background-color: #3498db; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
         button:hover { background-color: #2980b9; }
@@ -25,7 +25,7 @@
 <body>
 
 <div class="container">
-    <h1>🔎 원장님 전용 치과재료 멀티 검색기 (v1.2)</h1>
+    <h1>🔎 원장님 전용 치과재료 멀티 검색기</h1>
     
     <div class="search-box">
         <input type="text" id="keyword" placeholder="검색할 재료명을 입력하세요 (예: 레진, 알지네이트)" onkeypress="if(event.keyCode==13) searchAll();">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mall-list">
-        <p>📊 연동 최적화 완료된 치과 쇼핑몰 목록</p>
+        <p>📊 연동 완료된 치과 쇼핑몰</p>
         <div class="tags">
             <span class="tag">오스템 덴올</span>
             <span class="tag">엠덴트 (메가젠)</span>
@@ -48,9 +48,9 @@
     </div>
 
     <div class="notice">
-        📌 <b>원장님, 오류 방지를 위한 팁:</b><br>
-        1. 팝업 차단 알림이 뜨면 반드시 <b>[항상 허용]</b>해 주세요.<br>
-        2. 치과 쇼핑몰 특성상 <u>미리 다른 탭에서 로그인을 해두신 상태</u>여야 다이아몬드 버나 레진 등의 검색 가격이 에러 없이 완벽하게 노출됩니다.
+        📌 <b>정상 작동을 위한 안내:</b><br>
+        1. 첫 검색 시 주소창 우측의 <u>팝업 차단 창을 꼭 [항상 허용]</u>으로 풀어주세요.<br>
+        2. 각 쇼핑몰들이 폐쇄몰이므로, <u>미리 다른 탭에서 로그인을 해두셔야</u> 검색 결과와 원장님 회원 등급별 특가가 정상적으로 노출됩니다.
     </div>
 </div>
 
@@ -62,35 +62,19 @@ function searchAll() {
         return;
     }
     
+    // 안전한 검색어 인코딩 처리 (공백 및 한글 깨짐 방지)
     var encodedQuery = encodeURIComponent(query);
 
     var urls = [
-        // 1. 오스템 덴올 통합검색 신규 패턴
-        "https://denall.com" + encodedQuery,
-        
-        // 2. 엠덴트 (메가젠) 검색 엔진
-        "https://m-dent.co.kr" + encodedQuery,
-        
-        // 3. 오브마켓 (덴티스)
-        "https://allof.co.kr/market/search?s=" + encodedQuery,
-        
-        // 4. DVmall
-        "https://dvmall.co.kr" + encodedQuery,
-        
-        // 5. 이덴트
-        "https://edent.co.kr" + encodedQuery,
-        
-        // 6. 덴탈빈 몰
-        "https://dentalbean.com" + encodedQuery,
-        
-        // 7. 덴탈365
-        "https://dental365.co.kr" + encodedQuery,
-        
-        // 8. 올소마트
-        "https://orthomart.co.kr" + encodedQuery,
-        
-        // 9. 미소몰닷컴
-        "https://misomall.com" + encodedQuery
+        "https://denall.com" + encodedQuery, // 오스템 덴올
+        "https://m-dent.co.kr" + encodedQuery, // 엠덴트
+        "https://allof.co.kr" + encodedQuery, // 오브마켓
+        "https://dvmall.co.kr" + encodedQuery, // DVmall
+        "https://edent.co.kr" + encodedQuery, // 이덴트
+        "https://dentalbean.com" + encodedQuery, // 덴탈빈
+        "https://dental365.co.kr" + encodedQuery, // 덴탈365
+        "https://orthomart.co.kr" + encodedQuery, // 올소마트
+        "https://misomall.com" + encodedQuery // 미소몰
     ];
 
     urls.forEach(function(url) {
